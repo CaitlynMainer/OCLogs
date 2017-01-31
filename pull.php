@@ -1,5 +1,4 @@
 <?PHP
-//Test
     $cmd = "git fetch origin && git merge origin/master";
     while (@ ob_end_flush()); // end all output buffers if any
 
