@@ -1,8 +1,6 @@
-*.log
-*.html
-*.jpg
-*.png
-*.gif
-*.sh
-*.css
-*.ico
+/*
+
+!.gitignore
+!LICENSE
+!*.php
+!*.js
