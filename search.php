@@ -46,7 +46,7 @@ if (isset($_GET['search']) && !empty($_GET['search']))
 
   foreach (new DirectoryIterator(".") as $file)
   {
-    if (in_array($file->getExtension(), $file_types) && $file->getBasename() != "cron.log")
+    if (in_array($file->getExtension(), $file_types) && $file->getBasename() != "cron.log" && (!isset($_GET['file']) || $_GET['file'] == $file))
     {
       $file_contents = file_get_contents($file->getPathname());
       $file_contents = explode("\n", $file_contents);
