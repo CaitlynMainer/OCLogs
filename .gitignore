@@ -2,5 +2,15 @@
 
 !.gitignore
 !LICENSE
-!*.php
 !*.js
+
+!index.php
+!.getlatest.php
+!search.php
+!colorparser.php
+!parser.php
+!pull.php
+!fileTypes.php
+!DirectoryLister.php
+!default_footer.php
+!default_header.php
