@@ -23,7 +23,9 @@ return array(
         '*.html',
         '*.ico',
         '*.gz',
-        '*.tgz'
+        '*.tgz',
+        'LICENSE',
+        '*.iml'
     ),
 
     // Files that, if present in a directory, make the directory
