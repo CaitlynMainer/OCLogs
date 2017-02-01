@@ -50,6 +50,7 @@ if (isset($_GET['search']) && !empty($_GET['search']))
       $file_contents = explode("\n", $file_contents);
       foreach ($file_contents as $number => $line)
       {
+        $number += 1; //Array starts at 0 but lines start at 1
         $test_line = $line;
         $test_string = $search_string;
         if ($ignore_case)
@@ -101,7 +102,7 @@ else
   .line_number
   {
     display: inline-block;
-    width: 35px;
+    width: 45px;
   }
 
   label
