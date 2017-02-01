@@ -30,12 +30,14 @@ function insert($target, $stringOrList)
     return $target;
 }
 
+$ignore_case = true;
 if (isset($_GET['search']) && !empty($_GET['search']))
 {
   $search_string = $_GET['search'];
-  $ignore_case = true;
   if (isset($_GET['case']))
     $ignore_case = (($_GET['case'] == 0) ? false : true);
+  else
+    $ignore_case = false;
   $test = false;
   $file_types = array(
     "log"
