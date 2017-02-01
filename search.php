@@ -60,11 +60,15 @@ if (isset($_GET['search']) && !empty($_GET['search']))
           $test_line = strtolower($line);
           $test_string = strtolower($search_string);
         }
+
+        $re = '/(.*)('.$test_string.')(.*)/'.(($ignore_case) ? "i" : "");
         if (strpos($test_line, $test_string) !== false)
         {
           if (!is_array($matches[$file->getBasename()]["lines"]))
             $matches[$file->getBasename()]["lines"] = array();
-          array_push($matches[$file->getBasename()]["lines"], array("line" => htmlspecialchars($line), "number" => $number));
+          preg_match_all($re, htmlspecialchars($line), $regex_matches);
+          $match = $regex_matches[1][0]."<span class='match'>".$regex_matches[2][0]."</span>".$regex_matches[3][0];
+          array_push($matches[$file->getBasename()]["lines"], array("line" => $match, "number" => $number));
           $matches[$file->getBasename()]["file"] = $file->getFilename();
         }
       }
@@ -105,6 +109,12 @@ else
   {
     display: inline-block;
     width: 45px;
+  }
+
+  .match
+  {
+    color       : red;
+    font-weight : bold;
   }
 
   label
