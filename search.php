@@ -33,7 +33,7 @@ function insert($target, $stringOrList)
 $ignore_case = true;
 if (isset($_GET['search']) && !empty($_GET['search']))
 {
-  $search_string = $_GET['search'];
+  $search_string = htmlspecialchars($_GET['search']);
   if (isset($_GET['case']))
     $ignore_case = (($_GET['case'] == 0) ? false : true);
   else
@@ -161,9 +161,9 @@ if (count($matches) > 0)
     foreach ($match["lines"] as $line)
     {
       if ($line_counter < 5)
-        $lines .= insert($template_line, array("line" => str_replace("<", "&lt;", $line["line"]), "line_number" => $line["number"], "filename" => $match["file"]));
+        $lines .= insert($template_line, array("line" => $line["line"], "line_number" => $line["number"], "filename" => $match["file"]));
       else
-        $lines .= insert($template_line_hidden, array("line" => str_replace("<", "&lt;", $line["line"]), "line_number" => $line["number"], "filename" => $match["file"]));;
+        $lines .= insert($template_line_hidden, array("line" => $line["line"], "line_number" => $line["number"], "filename" => $match["file"]));;
       $line_counter++;
     }
     if ($line_counter > 5)
