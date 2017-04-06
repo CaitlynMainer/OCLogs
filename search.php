@@ -61,13 +61,13 @@ if (isset($_GET['search']) && !empty($_GET['search']))
           $test_string = strtolower($search_string);
         }
 
-        $re = '/(.*)('.$test_string.')(.*)/'.(($ignore_case) ? "i" : "");
+        $re = '/(.*)('.htmlspecialchars($test_string).')(.*)/'.(($ignore_case) ? "i" : "");
         if (strpos($test_line, $test_string) !== false)
         {
           if (!is_array($matches[$file->getBasename()]["lines"]))
             $matches[$file->getBasename()]["lines"] = array();
           preg_match_all($re, htmlspecialchars($line), $regex_matches);
-          $match = $regex_matches[1][0]."<span class='match'>".htmlspecialchars($regex_matches[2][0])."</span>".$regex_matches[3][0];
+          $match = $regex_matches[1][0]."<span class='match'>".$regex_matches[2][0]."</span>".$regex_matches[3][0];
           array_push($matches[$file->getBasename()]["lines"], array("line" => $match, "number" => $number));
           $matches[$file->getBasename()]["file"] = $file->getFilename();
         }
