@@ -33,7 +33,7 @@ function insert($target, $stringOrList)
 $ignore_case = true;
 if (isset($_GET['search']) && !empty($_GET['search']))
 {
-  $search_string = htmlspecialchars($_GET['search']);
+  $search_string = $_GET['search'];
   if (isset($_GET['case']))
     $ignore_case = (($_GET['case'] == 0) ? false : true);
   else
@@ -67,7 +67,7 @@ if (isset($_GET['search']) && !empty($_GET['search']))
           if (!is_array($matches[$file->getBasename()]["lines"]))
             $matches[$file->getBasename()]["lines"] = array();
           preg_match_all($re, htmlspecialchars($line), $regex_matches);
-          $match = $regex_matches[1][0]."<span class='match'>".$regex_matches[2][0]."</span>".$regex_matches[3][0];
+          $match = $regex_matches[1][0]."<span class='match'>".htmlspecialchars($regex_matches[2][0])."</span>".$regex_matches[3][0];
           array_push($matches[$file->getBasename()]["lines"], array("line" => $match, "number" => $number));
           $matches[$file->getBasename()]["file"] = $file->getFilename();
         }
