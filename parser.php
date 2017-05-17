@@ -125,7 +125,7 @@ if (!isset($_GET['plain'])) {
     </script>
     <style>
         * {
-            font-family: courier;
+            font-family: monospace;
         }
         .line_number
         {
