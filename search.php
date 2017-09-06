@@ -90,7 +90,7 @@ else
     padding       : 10px;
     margin        : 5px;
     margin-bottom : 15px;
-    text-mode: wrap;
+    word-wrap: break-word;
   }
 
   .result_display:hover
