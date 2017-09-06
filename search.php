@@ -90,6 +90,7 @@ else
     padding       : 10px;
     margin        : 5px;
     margin-bottom : 15px;
+    text-mode: wrap;
   }
 
   .result_display:hover
