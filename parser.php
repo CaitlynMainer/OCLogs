@@ -94,7 +94,8 @@ elseif (strtolower($target_log) == "yesterday")
 elseif (strtolower($target_log) == "tomorrow")
   $target_log = date("Y-m-d", (time() + (60 * 60 * 24)));
 
-$escaped = preg_replace('/[^A-Za-z0-9_\-]\./', '_', $target_log);
+//$escaped = preg_replace('/[^A-Za-z0-9_\-]\./', '_', $target_log);
+$escaped = basename($target_log);
 
 $buffer = ob_get_clean();
 $tidy   = new tidy();
