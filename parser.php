@@ -1,4 +1,12 @@
 <?php
+include("config.php");
+
+// Create connection
+$mysqli = new mysqli($config["mysql_server"], $config["mysql_user"], $config["mysql_pass"], $config["mysql_db"]);
+if (mysqli_connect_errno()) {
+	die("Failed to connect to MySQL: " . mysqli_connect_error());
+}
+
 require("colorparser.php");
 
 function makeClickableLinks($s)
@@ -158,29 +166,49 @@ if (!isset($_GET['plain'])) {
 $mcp = new MircColorParser();
 $line_number = 1;
 if ($escaped != "") {
-  if (file_exists($escaped) && ($handle = fopen($escaped, "r")) !== false) {
-
-
-    //$handle = @fopen($escaped, "r");
     if (!isset($_GET['plain'])) {
       date_default_timezone_set(timezone_name_from_abbr("CST"));
+      
       $yesterday = date('Y-m-d', strtotime(str_replace(".log", "", $escaped) . ' -1 day'));
+      $stmt = $mysqli->prepare("SELECT count(`linenum`) FROM `logs` WHERE `date` = ? AND `channel`='#oc'");
+      $stmt->bind_param(s,$yesterday);
+      $stmt->execute();
+      $stmt->bind_result($count);
+      $stmt->fetch();
+      if ($count > 0) {
+          $yesterlink = "<a href=\"parser?log=$yesterday.log\"><<Prev</a> ";
+          $buffer .= $yesterlink;
+      }
+      $stmt->close();
       $tomorrow  = date('Y-m-d', strtotime(str_replace(".log", "", $escaped) . ' +1 day'));
-      if (file_exists($yesterday . ".log")) {
-        $buffer .= "<a href=\"parser?log=$yesterday.log\"><<Prev</a> ";
-      }
-      if (file_exists($tomorrow . ".log")) {
-        $buffer .= "<a href=\"parser?log=$tomorrow.log\">Next>></a> ";
+      $stmt = $mysqli->prepare("SELECT count(`linenum`) FROM `logs` WHERE `date` = ? AND `channel`='#oc'");
+      $stmt->bind_param(s,$tomorrow);
+      $stmt->execute();
+      $stmt->bind_result($count);
+      $stmt->fetch();
+      if ($count > 0) {
+          $tomlink = "<a href=\"parser?log=$tomorrow.log\">Next>></a> ";
+          $buffer .= $tomlink;
       } else {
-        $buffer .= "<a href=\"parser?log=$escaped&refresh#bottom\">Auto Refresh</a> ";
+        $autoreflink = "<a href=\"parser?log=$escaped&refresh#bottom\">Auto Refresh</a> ";
+        $buffer .= $autoreflink;
       }
+      $stmt->close();
       $buffer .= "<a id=\"scrlBotm\" href=\"#\">Scroll to Bottom</a><br>";
       $buffer .= "<div id='line_toggle_button_container'>Stuff goes here</div>";
     }
-    if ($handle) {
-      while (($line = fgets($handle)) !== false) {
+
+        $stmt = $mysqli->prepare("SELECT `date`,`timestamp`, `message`, `linenum` FROM `logs` WHERE `date` = ? AND `channel`='#oc'");
+        $stmt->bind_param(s,str_replace(".log", "", $escaped));
+        $stmt->execute();
+        $stmt->bind_result($date, $timestamp, $line, $linenum);
+        $i = 0;
+        $stmt->store_result();
+        $numrows = $stmt->num_rows;
+        if ($numrows > 1) {
+        while ($stmt->fetch()) {
         $type = "unknown";
-        $line = htmlspecialchars($line);
+        $line = htmlspecialchars("[".$timestamp."] ".$line);
         if (!isset($_GET['plain'])) {
           $line = $mcp->colorize($line);
           list($line, $type) = parseLine($line, $line_number);
@@ -191,22 +219,22 @@ if ($escaped != "") {
         if (!isset($_GET['nolinks'])) {
           $line = makeClickableLinks($line);
         }
-        //if (isset($_GET['nocorded'])) {
         $line = str_replace("&lt;Corded&gt; &lt;", "<img height=\"16\" width=\"16\" src=\"https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png\" title=\"<Corded> \">&lt;", $line);
         $line = str_replace("&lt;Discord&gt; &lt;", "<img height=\"16\" width=\"16\" src=\"https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png\" title=\"<Discord> \">&lt;", $line);
-        //}
         $buffer .= "<div id='CL$line_number' class='full_line $type'>" . $line . "</div>";
         $line_number++;
       }
-      fclose($handle);
-    } else {
-      // error opening the file.
+      $stmt->close(); 
+        }
+
+     else {
+       die("error opening the file.");
     }
     if (!isset($_GET['plain'])) {
-      if (isset($yesterday) && file_exists($yesterday . ".log")) {
+      if (isset($yesterday) && isset($yesterlink)) {
         $buffer .= "<a href=\"parser?log=$yesterday.log\"><<Prev</a> ";
       }
-      if (isset($tomorrow) && file_exists($tomorrow . ".log")) {
+      if (isset($tomorrow) && isset($tomlink)) {
         $buffer .= "<a href=\"parser?log=$tomorrow.log\">Next>></a> ";
       } else {
         if (!isset($_GET['refresh'])) {
@@ -228,9 +256,9 @@ if ($escaped != "") {
       ), "utf8");
     }
     echo $buffer;
-  } else {
-    echo "Specified file '$escaped' doesn't exist";
-  }
+  //} else {
+  //  echo "Specified file '$escaped' doesn't exist";
+  //}
 } else {
   echo "No log file specified";
 }
