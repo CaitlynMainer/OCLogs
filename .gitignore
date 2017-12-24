@@ -14,3 +14,4 @@
 !DirectoryLister.php
 !default_footer.php
 !default_header.php
+!config.dist.php
