@@ -20,36 +20,37 @@ if (mysqli_connect_errno()) {
 
   <div id="container">
   
-    <h1>OCLogs listing</h1>
-    <?PHP
-date_default_timezone_set(timezone_name_from_abbr("CST"));
-$yest = date('Y-m-d', strtotime( '-1 days' ));
-$today = date('Y-m-d');
-
-?>
-<a href="stats.html">Stats</a> | <a href=".getlatest.php">Download All (.tgz)</a> | <a href="parser.php?log=<?PHP echo $yest; ?>.log">Yesterday's Logs</a> | <a href="parser.php?log=<?PHP echo $today; ?>.log">Today's Logs</a> | <form action="search" method="get" style="margin: 0; padding: 0; display:inline;"><input type="hidden" name="case" value="1" /><input style="display: inline;" type="text" name="search"><input style="display: inline;" type="submit" value="Search"></form>
+    <h1>PCL IRCLogs listing</h1>
     <table class="sortable">
       <thead>
         <tr>
-          <th>Filename</th>
+          <th>Channel Name</th>
+          <th>Days Logged</th>
         </tr>
       </thead>
       <tbody>
       <?php
-$stmt = $mysqli->prepare("SELECT DISTINCT `date` FROM `logs` WHERE `channel`='#oc' ORDER BY `date` DESC");
-$stmt->execute();
-    $stmt->bind_result($date);
-
-    $sqltime = (microtime(true) - $time_start);
-    /* fetch value */
-    $i = 0;
-    while ($stmt->fetch()) {
-          print("
-          <tr class='$class'>
-            <td><a href='/parser?log=$date.log'>$date.log</a></td>
-          </tr>");
-          }
-          $stmt->close();
+        $channel = "#oc";
+        $stmt = $mysqli->prepare("SELECT DISTINCT `channel` FROM `logs` ORDER BY `channel` DESC");
+        $stmt2 = $mysqli->prepare("SELECT DISTINCT `date` FROM `logs` WHERE `channel`=?");
+        $stmt2->bind_param(s,$channel);
+        $stmt->execute();
+        $stmt->bind_result($channel);
+        $stmt->store_result();
+        $sqltime = (microtime(true) - $time_start);
+        /* fetch value */
+        while ($stmt->fetch()) {
+            $stmt2->execute();
+            $stmt2->store_result();
+            $numrows = $stmt2->num_rows;
+              print("
+              <tr class='$class'>
+                <td><a href='/list?chan=".str_replace("#","",$channel)."'>$channel</a></td>
+                <td>$numrows</td>
+              </tr>");
+        }
+        $stmt2->close();
+        $stmt->close();
       ?>
       </tbody>
     </table>

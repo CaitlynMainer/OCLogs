@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-
+$channel = "#".$_GET[chan];
 // Create connection
 $mysqli = new mysqli($config["mysql_server"], $config["mysql_user"], $config["mysql_pass"], $config["mysql_db"]);
 if (mysqli_connect_errno()) {
@@ -37,7 +37,7 @@ function parseLine($line, $line_number = null)
     /**
      * "Quit" lines.
      */
-  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] \*\*\* Quits: (?<nick>\S+) \((?<host>\S+)\) \((?<reason>.*\))$/', $line, $matches)) {
+  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] \*\*\* Quits: (?<nick>\S+)\((?<host>\S+)\) \((?<reason>.*\))$/', $line, $matches)) {
     $type = "quit";
     $line = "<span style=\"color: red;\">[$matches[time]] &#8678; Quits: $matches[nick] ($matches[host]) ($matches[reason]) </span>";
     /**
@@ -170,8 +170,8 @@ if ($escaped != "") {
       date_default_timezone_set(timezone_name_from_abbr("CST"));
       
       $yesterday = date('Y-m-d', strtotime(str_replace(".log", "", $escaped) . ' -1 day'));
-      $stmt = $mysqli->prepare("SELECT count(`linenum`) FROM `logs` WHERE `date` = ? AND `channel`='#oc'");
-      $stmt->bind_param(s,$yesterday);
+      $stmt = $mysqli->prepare("SELECT count(`linenum`) FROM `logs` WHERE `date` = ? AND `channel`=?");
+      $stmt->bind_param(ss,$yesterday,$channel);
       $stmt->execute();
       $stmt->bind_result($count);
       $stmt->fetch();
@@ -181,8 +181,8 @@ if ($escaped != "") {
       }
       $stmt->close();
       $tomorrow  = date('Y-m-d', strtotime(str_replace(".log", "", $escaped) . ' +1 day'));
-      $stmt = $mysqli->prepare("SELECT count(`linenum`) FROM `logs` WHERE `date` = ? AND `channel`='#oc'");
-      $stmt->bind_param(s,$tomorrow);
+      $stmt = $mysqli->prepare("SELECT count(`linenum`) FROM `logs` WHERE `date` = ? AND `channel`=?");
+      $stmt->bind_param(ss,$tomorrow,$channel);
       $stmt->execute();
       $stmt->bind_result($count);
       $stmt->fetch();
@@ -197,9 +197,11 @@ if ($escaped != "") {
       $buffer .= "<a id=\"scrlBotm\" href=\"#\">Scroll to Bottom</a><br>";
       $buffer .= "<div id='line_toggle_button_container'>Stuff goes here</div>";
     }
-
-        $stmt = $mysqli->prepare("SELECT `date`,`timestamp`, `message`, `linenum` FROM `logs` WHERE `date` = ? AND `channel`='#oc'");
-        $stmt->bind_param(s,str_replace(".log", "", $escaped));
+        $sql = "SELECT `date`,`timestamp`, `message`, `linenum` FROM `logs` WHERE `date` = ? AND `channel`=?";
+        //die(printf( str_replace('?', '%s', $sql), str_replace(".log", "", $escaped),$channel));
+        $stmt = $mysqli->prepare($sql);
+        
+        $stmt->bind_param(ss,str_replace(".log", "", $escaped),$channel);
         $stmt->execute();
         $stmt->bind_result($date, $timestamp, $line, $linenum);
         $i = 0;
@@ -232,18 +234,18 @@ if ($escaped != "") {
     }
     if (!isset($_GET['plain'])) {
       if (isset($yesterday) && isset($yesterlink)) {
-        $buffer .= "<a href=\"parser?log=$yesterday.log\"><<Prev</a> ";
+        $buffer .= "<a href=\"parser?chan=$chan&log=$yesterday.log\"><<Prev</a> ";
       }
       if (isset($tomorrow) && isset($tomlink)) {
-        $buffer .= "<a href=\"parser?log=$tomorrow.log\">Next>></a> ";
+        $buffer .= "<a href=\"parser?chan=$chan&log=$tomorrow.log\">Next>></a> ";
       } else {
         if (!isset($_GET['refresh'])) {
-          $buffer .= "<a href=\"parser?log=$escaped&refresh#bottom\">Auto Refresh</a> ";
+          $buffer .= "<a href=\"parser?chan=$chan&log=$escaped&refresh#bottom\">Auto Refresh</a> ";
         } else {
-          $buffer .= "<a href=\"parser?log=$escaped#bottom\">Stop Auto Refresh</a> ";
+          $buffer .= "<a href=\"parser?chan=$chan&log=$escaped#bottom\">Stop Auto Refresh</a> ";
           $buffer .= "<script type=\"text/javascript\">
 					window.setInterval(function() {
-						window.location.href = '\parser?log=$escaped&refresh#bottom';
+						window.location.href = '\parser?chan=$chan&log=$escaped&refresh#bottom';
 						location.reload();
 					}, 5000);
 					</script>";
