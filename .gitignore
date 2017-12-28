@@ -15,3 +15,5 @@
 !default_footer.php
 !default_header.php
 !config.dist.php
+!view.php
+!get_newest.php

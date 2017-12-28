@@ -143,18 +143,18 @@ else
 <?php
 $template = "
 <div class=\"result_display\">
-  <div class='result_display_title'><a href='https://oclogs.pc-logix.com/parser.php?chan=$chan&log={file_name}'> > </a>{file_name}</div>
+  <div class='result_display_title'><a href='/view.php?chan=$chan&log={file_name}'> > </a>{file_name}</div>
   {lines}
   </div>
 </div>";
 $template_line = "
 <div>
-  <div class='line_number'><a href='https://oclogs.pc-logix.com/parser.php?chan=$chan&log={filename}#L{line_number}'>L{line_number}</a></div>
+  <div class='line_number'><a href='/view.php?chan=$chan&log={filename}#L{line_number}'>L{line_number}</a></div>
   <span>{line}</span>
 </div>";
 $template_line_hidden = "
 <div class='{filename}' style='display: none;'>
-  <div class='line_number'><a href='https://oclogs.pc-logix.com/parser.php?chan=$chan&log={filename}#L{line_number}'>L{line_number}</a></div>
+  <div class='line_number'><a href='/view.php?chan=$chan&log={filename}#L{line_number}'>L{line_number}</a></div>
   <span>{line}</span>
 </div>";
 
