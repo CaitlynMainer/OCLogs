@@ -127,10 +127,10 @@ if ($escaped != "") {
       $stmt->bind_result($count);
       $stmt->fetch();
       if ($count > 0) {
-          $tomlink = "<a href=\"view?log=$tomorrow.log\">Next>></a> ";
+          $tomlink = "<a href=\"view?chan=$chan&log=$tomorrow.log\">Next>></a> ";
           $buffer .= $tomlink;
       } else {
-        $autoreflink = "<a href=\"view?log=$escaped&refresh#bottom\">Auto Refresh</a> ";
+        $autoreflink = "<a href=\"view?chan=$chan&log=$escaped&refresh#bottom\">Auto Refresh</a> ";
         $buffer .= $autoreflink;
       }
       $stmt->close();
@@ -167,7 +167,7 @@ if ($escaped != "") {
             $line = str_replace("&lt;MrConductor1&gt; &lt;", "<img height=\"16\" width=\"16\" src=\"https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png\" title=\"<MrConductor> \">&lt;", $line);
             $buffer .= "<div id='CL$line_number' class='full_line $type'>" . $line . "</div>";
             $line_number++;
-            $buffer .= "<script> lineNum = $line_number;</script>";
+            $buffer .= "<script>$('#pageContent').css('height', $(window).height() - 20); lineNum = $line_number;</script>";
         }
         $stmt->close(); 
     } else {
