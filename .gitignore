@@ -3,6 +3,7 @@
 !.gitignore
 !LICENSE
 !*.js
+!*.css
 
 !index.php
 !.getlatest.php
