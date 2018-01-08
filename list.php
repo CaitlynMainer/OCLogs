@@ -1,4 +1,5 @@
 <?PHP
+$time_start = microtime(true); 
 include("config.php");
 // Create connection
 $mysqli = new mysqli($config["mysql_server"], $config["mysql_user"], $config["mysql_pass"], $config["mysql_db"]);
@@ -26,7 +27,7 @@ $channel=$_GET[chan];
 date_default_timezone_set(timezone_name_from_abbr("CST"));
 $yest = date('Y-m-d', strtotime( '-1 days' ));
 $today = date('Y-m-d');
-
+$i = 0;
 ?>
 <a href="stats/<?PHP echo $channel; ?>/index.html">Stats</a> | <a href=".getlatest.php?chan=<?PHP echo $channel; ?>">Download All (.tgz)</a> | <a href="view?chan=<?PHP echo $channel; ?>&log=<?PHP echo $yest; ?>.log">Yesterday's Logs</a> | <a href="view?chan=<?PHP echo $channel; ?>&log=<?PHP echo $today; ?>.log">Today's Logs</a> | <form action="search" method="get" style="margin: 0; padding: 0; display:inline;"><input type="hidden" name="case" value="1" /><input style="display: inline;" type="text" name="search"><input type="hidden" name="chan" value="<?PHP echo $channel; ?>"><input style="display: inline;" type="submit" value="Search"></form>
     <table class="sortable">
@@ -48,9 +49,12 @@ $today = date('Y-m-d');
         $stmt->store_result();
         $sqltime = (microtime(true) - $time_start);
         while ($stmt->fetch()) {
+            $i++;
+            $mainloop = (microtime(true) - $time_start);
             $stmt2->execute();
             $stmt2->bind_result($count);
             $stmt2->fetch();
+            $sqltime = (microtime(true) - $time_start);
               print("
               <tr class='$class'>
                 <td><a href='/view?chan=".$channel."&log=$date.log'>$date.log</a></td>
@@ -62,6 +66,13 @@ $today = date('Y-m-d');
       ?>
       </tbody>
     </table>
+	  <?PHP
+	  // Anywhere else in the script
+	  echo 'Total execution time in seconds: ' . (microtime(true) - $time_start);
+	  echo ' | SQL Query time in seconds: ' . $sqltime;
+	  echo ' | Main loop time in seconds: ' . $mainloop;
+	  echo ' | Total loops: ' . $i;
+	  ?>
   </div>
 </body>
 </html>
