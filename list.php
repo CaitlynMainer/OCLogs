@@ -48,9 +48,9 @@ $today = date('Y-m-d');
         $stmt->store_result();
         $sqltime = (microtime(true) - $time_start);
         while ($stmt->fetch()) {
-            //$stmt2->execute();
-            //$stmt2->bind_result($count);
-            //$stmt2->fetch();
+            $stmt2->execute();
+            $stmt2->bind_result($count);
+            $stmt2->fetch();
               print("
               <tr class='$class'>
                 <td><a href='/view?chan=".$channel."&log=$date.log'>$date.log</a></td>
