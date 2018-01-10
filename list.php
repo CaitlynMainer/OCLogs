@@ -40,7 +40,7 @@ $i = 0;
       <tbody>
       <?php
         $stmt  = $mysqli->prepare("SELECT DISTINCT `date` FROM `logs` WHERE `channel`=? ORDER BY `date` DESC");
-        $stmt2 = $mysqli->prepare("SELECT count(*) FROM `logs` WHERE `channel`=? AND `date`=?");
+        $stmt2 = $mysqli->prepare("SELECT `count` FROM `log_count` WHERE `channel`=? AND `date`=?");
         $stmt2->bind_param(ss,$chan, $date);
         $chan = "#".$channel;
         $stmt->bind_param(s,$chan);
