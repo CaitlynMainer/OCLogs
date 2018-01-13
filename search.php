@@ -48,7 +48,7 @@ if (isset($_GET['search']) && !empty($_GET['search']))
   else
     $ignore_case = false;
   $file_counter = 0;
-$stmt = $mysqli->prepare("SELECT `date`, `timestamp`, `message`, `linenum` FROM `logs` WHERE MATCH(message) AGAINST(? IN BOOLEAN MODE) AND `channel`='#oc'");
+$stmt = $mysqli->prepare("SELECT `date`, `timestamp`, `message`, `linenum` FROM `logs` WHERE MATCH(message) AGAINST(? IN BOOLEAN MODE) AND `channel`='?'");
 $search = "\"".$_GET['search']."\"";
 $channel = "#".$chan;
 $stmt->bind_param(ss,$search, $channel);
