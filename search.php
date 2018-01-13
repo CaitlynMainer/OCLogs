@@ -50,7 +50,8 @@ if (isset($_GET['search']) && !empty($_GET['search']))
   $file_counter = 0;
 $stmt = $mysqli->prepare("SELECT `date`, `timestamp`, `message`, `linenum` FROM `logs` WHERE MATCH(message) AGAINST(? IN BOOLEAN MODE) AND `channel`='#oc'");
 $search = "\"".$_GET['search']."\"";
-$stmt->bind_param(ss,$search, "#".$chan);
+$channel = "#".$chan;
+$stmt->bind_param(ss,$search, $channel);
 $stmt->execute();
     $stmt->bind_result($date, $timestamp, $line, $linenum);
 
