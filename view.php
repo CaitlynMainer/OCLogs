@@ -108,7 +108,7 @@ $line_number = 1;
 if ($escaped != "") {
     if (!isset($_GET['plain'])) {
       date_default_timezone_set(timezone_name_from_abbr("CST"));
-      
+      $mysqli->set_charset("utf8");   
       $yesterday = date('Y-m-d', strtotime(str_replace(".log", "", $escaped) . ' -1 day'));
       $stmt = $mysqli->prepare("SELECT count(`linenum`) FROM `logs` WHERE `date` = ? AND `channel`=?");
       $stmt->bind_param(ss,$yesterday,$channel);
@@ -150,7 +150,7 @@ if ($escaped != "") {
     if ($numrows > 1) {
         while ($stmt->fetch()) {
             $type = "unknown";
-            $line = htmlspecialchars("[".$timestamp."] ".$line);
+            $line = htmlentities("[".$timestamp."] ".$line);
             if (!isset($_GET['plain'])) {
               $line = $mcp->colorize($line);
               list($line, $type) = parseLine($line, $line_number);

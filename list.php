@@ -14,7 +14,7 @@ $channel=$_GET[chan];
 <head>
   <meta charset="UTF-8">
   <title>OCLogs</title>
-  <link rel="stylesheet" href=".style.css">
+  <link rel="stylesheet" href="style.css">
   <script src=".sorttable.js"></script>
 </head>
 
