@@ -116,7 +116,7 @@ if ($escaped != "") {
       $stmt->bind_result($count);
       $stmt->fetch();
       if ($count > 0) {
-          $yesterlink = "<a href=\"view?chan=$chan&log=yesterday.log\"><<Prev</a> ";
+          $yesterlink = "<a href=\"view?chan=$chan&log=$yesterday.log\"><<Prev</a> ";
           $buffer .= $yesterlink;
       }
       $stmt->close();
