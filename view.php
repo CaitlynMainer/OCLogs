@@ -116,7 +116,7 @@ if ($escaped != "") {
       $stmt->bind_result($count);
       $stmt->fetch();
       if ($count > 0) {
-          $yesterlink = "<a href=\"view?log=$yesterday.log\"><<Prev</a> ";
+          $yesterlink = "<a href=\"view?chan=$chan&log=yesterday.log\"><<Prev</a> ";
           $buffer .= $yesterlink;
       }
       $stmt->close();
@@ -291,4 +291,5 @@ if ($escaped != "") {
   if (window.location.hash != "")
     highlight_line_by_hash();
   generate_line_toggle_buttons();  
+
 </script>
