@@ -30,7 +30,7 @@ function parseLine($line, $line_number = null)
     /**
      * "Quit" lines.
      */
-  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] \*\*\* Quits: (?<nick>\S+)\s?\((?<host>\S+)\) \((?<reason>.*\))$/', $line, $matches)) {
+  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] \*\*\* Quits: (?<nick>\S+)\s?\((?<host>\S+)\) \((?<reason>.*\)$/', $line, $matches)) {
     $type = "quit";
     $line = "<span style=\"color: red;\">[$matches[time]] &#8678; Quits: $matches[nick] ($matches[host]) ($matches[reason]) </span>";
     /**
