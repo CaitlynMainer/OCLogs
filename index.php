@@ -24,7 +24,7 @@ if (mysqli_connect_errno()) {
     <table class="sortable">
       <thead>
         <tr>
-	  <th width="10%">&nbsp;</th>
+	  <th width="5%">&nbsp;</th>
           <th>Channel Name</th>
           <th>Days Logged</th>
         </tr>
