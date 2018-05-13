@@ -1,5 +1,5 @@
 <?PHP
-
+/*
 include("config.php");
 $channel = "#" . $_GET[chan];
 $chan    = $_GET[chan];
@@ -54,4 +54,6 @@ ob_end_clean();//required here or large files will not work
 @fpassthru($handle);//works fine now
 unlink("latest.tgz");
 unlink("latest.tar");
+*/
+header($_SERVER['SERVER_PROTOCOL'] . ' 501 Not Implemented', true, 501);
 ?>
