@@ -45,7 +45,7 @@ if (mysqli_connect_errno()) {
             $numrows = $stmt2->num_rows;
               print("
               <tr class='$class'>
-                <td><a href='/export.php?channel=".str_replace("#","",$channel)."'>Export</a> <a href='/list?chan=".str_replace("#","",$channel)."'>$channel</a></td>
+                <td><a href='/export.php?channel=".str_replace("#","",$channel)."'>Export</a>&nbsp;<a href='/list?chan=".str_replace("#","",$channel)."'>$channel</a></td>
                 <td>$numrows</td>
               </tr>");
         }
