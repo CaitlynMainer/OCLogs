@@ -29,7 +29,7 @@ $yest = date('Y-m-d', strtotime( '-1 days' ));
 $today = date('Y-m-d');
 $i = 0;
 ?>
-<a href="stats/<?PHP echo $channel; ?>/index.html">Stats</a> | <a href=".getlatest.php?chan=<?PHP echo $channel; ?>">Download All (.tgz)</a> | <a href="view?chan=<?PHP echo $channel; ?>&log=<?PHP echo $yest; ?>.log">Yesterday's Logs</a> | <a href="view?chan=<?PHP echo $channel; ?>&log=<?PHP echo $today; ?>.log">Today's Logs</a> | <form action="search" method="get" style="margin: 0; padding: 0; display:inline;"><input type="hidden" name="case" value="1" /><input style="display: inline;" type="text" name="search"><input type="hidden" name="chan" value="<?PHP echo $channel; ?>"><input style="display: inline;" type="submit" value="Search"></form>
+<a href="stats/<?PHP echo $channel; ?>/index.html">Stats</a> | <a href="getlatest.php?chan=<?PHP echo $channel; ?>">Download All (.tgz)</a> | <a href="view?chan=<?PHP echo $channel; ?>&log=<?PHP echo $yest; ?>.log">Yesterday's Logs</a> | <a href="view?chan=<?PHP echo $channel; ?>&log=<?PHP echo $today; ?>.log">Today's Logs</a> | <form action="search" method="get" style="margin: 0; padding: 0; display:inline;"><input type="hidden" name="case" value="1" /><input style="display: inline;" type="text" name="search"><input type="hidden" name="chan" value="<?PHP echo $channel; ?>"><input style="display: inline;" type="submit" value="Search"></form>
     <table class="sortable">
       <thead>
         <tr>
