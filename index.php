@@ -20,7 +20,7 @@ if (mysqli_connect_errno()) {
 
   <div id="container">
   
-    <h1>PCL IRCLogs listing</h1>
+	  <h1>PCL IRCLogs listing <a href="export.php">Export all</a></h1>
     <table class="sortable">
       <thead>
         <tr>
@@ -45,7 +45,7 @@ if (mysqli_connect_errno()) {
             $numrows = $stmt2->num_rows;
               print("
               <tr class='$class'>
-                <td><a href='/list?chan=".str_replace("#","",$channel)."'>$channel</a></td>
+                <td><a href='/export.php?channel=".str_replace("#","",$channel)."'>Export</a> <a href='/list?chan=".str_replace("#","",$channel)."'>$channel</a></td>
                 <td>$numrows</td>
               </tr>");
         }
