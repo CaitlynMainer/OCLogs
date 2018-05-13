@@ -25,6 +25,22 @@ function EXPORT_TABLES($host,$user,$pass,$name, $tables=false, $backup_name=fals
         } $content .="\n\n\n";
     }
     $content .= "\r\n\r\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\r\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\r\n/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;";
+	$content .= "\r\n\r\nDELIMITER $$
+
+USE `c1irclogs`$$
+
+DROP TRIGGER `irclogs`$$
+
+CREATE
+    TRIGGER `irclogs` AFTER INSERT ON `logs` 
+    FOR EACH ROW BEGIN
+    INSERT INTO `c1irclogs`.`log_count` (`count`,`date`,`channel`)
+    SELECT COUNT(*), `date`, `channel` FROM `c1irclogs`.`logs` WHERE `date` = NEW.date COLLATE utf8mb4_unicode_ci AND `channel` = NEW.channel COLLATE utf8mb4_unicode_ci ORDER BY `linenum` 
+    ON DUPLICATE KEY UPDATE `count` = VALUES(`count`);
+    END;
+$$
+
+DELIMITER ;";
     $backup_name = $backup_name ? $backup_name : $name."___(".date('H-i-s')."_".date('d-m-Y').")__rand".rand(1,11111111).".sql";
     ob_get_clean(); header('Content-Type: application/octet-stream');   header("Content-Transfer-Encoding: Binary"); header("Content-disposition: attachment; filename=\"".$backup_name."\"");
     echo $content; exit;
