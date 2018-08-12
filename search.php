@@ -63,13 +63,11 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         }
         
         $re = '/(.*)(' . urlencode($test_string) . ')(.*)/' . (($ignore_case) ? "i" : "");
-        echo $re . "<br>";
         if (strpos($test_line, $test_string) !== false) {
             if (!is_array($matches[$date]["lines"]))
                 $matches[$date]["lines"] = array();
             $res = preg_match_all($re, urlencode($test_line), $regex_matches);
-            echo $res."<br>";
-            $match = $regex_matches[1][0] . "<span class='match'>" . $regex_matches[2][0] . "</span>" . $regex_matches[3][0];
+            $match = urldecode($regex_matches[1][0]) . "<span class='match'>" . urldecode($regex_matches[2][0]) . "</span>" . urldecode($regex_matches[3][0]);
             array_push($matches[$date]["lines"], array(
                 "line" => $match,
                 "number" => $linenum
