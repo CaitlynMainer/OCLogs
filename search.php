@@ -61,7 +61,7 @@ $stmt->execute();
     while ($stmt->fetch()) {
         $number += 1; //Array starts at 0 but lines start at 1
         $test_line = $line;
-        $test_string = $search_string;
+        $test_string = urldecode($search_string);
         if ($ignore_case) {
           $test_line = strtolower($line);
           $test_string = strtolower($search_string);
@@ -82,7 +82,6 @@ $stmt->execute();
       $stmt->close();
   ksort($matches);
   $matches = array_reverse($matches);
-  print_r($matches);	
 }
 else
 {
