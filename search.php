@@ -67,6 +67,8 @@ $stmt->execute();
           $test_string = strtolower($search_string);
         }
 echo htmlspecialchars($test_string);
+	    htmlspecialchars($line);
+	    echo "<br>";
         $re = '/(.*)('.htmlspecialchars($test_string).')(.*)/'.(($ignore_case) ? "i" : "");
         if (strpos($test_line, $test_string) !== false) {
           if (!is_array($matches[$date]["lines"]))
