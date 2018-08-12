@@ -63,6 +63,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         }
         
         $re = '/(.*)(' . htmlspecialchars($test_string) . ')(.*)/' . (($ignore_case) ? "i" : "");
+        echo $re . "<br>";
         if (strpos($test_line, $test_string) !== false) {
             if (!is_array($matches[$date]["lines"]))
                 $matches[$date]["lines"] = array();
