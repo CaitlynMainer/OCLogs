@@ -82,6 +82,7 @@ $stmt->execute();
       $stmt->close();
   ksort($matches);
   $matches = array_reverse($matches);
+  print_r($matches);	
 }
 else
 {
