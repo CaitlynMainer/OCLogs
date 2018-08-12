@@ -58,7 +58,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         $test_line   = $line;
         $test_string = $search_string;
         if ($ignore_case) {
-            $test_line   = strtolower($line);
+            $test_line   = strtolower($test_line);
             $test_string = strtolower($search_string);
         }
         
@@ -67,7 +67,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
             if (!is_array($matches[$date]["lines"]))
                 $matches[$date]["lines"] = array();
             preg_match_all($re, htmlspecialchars(urlencode($line)), $regex_matches);
-            $match = htmlspecialchars(urldecode($regex_matches[1][0])) . "<span class='match'>" . urldecode($regex_matches[2][0]) . "</span>" . urldecode($regex_matches[3][0]);
+            $match = htmlspecialchars(urldecode($regex_matches[1][0])) . "<span class='match'>" . htmlspecialchars(urldecode($regex_matches[2][0])) . "</span>" . htmlspecialchars(urldecode($regex_matches[3][0]));
             array_push($matches[$date]["lines"], array(
                 "line" => $match,
                 "number" => $linenum
