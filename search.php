@@ -66,7 +66,7 @@ $stmt->execute();
           $test_line = strtolower($line);
           $test_string = strtolower($search_string);
         }
-        $re = '/(.*)('.$test_string.')(.*)/'.(($ignore_case) ? "i" : "");
+        $re = '/(.*)("https://nc.ddna.co")(.*)/'.(($ignore_case) ? "i" : "");
         if (strpos($test_line, $test_string) !== false) {
           if (!is_array($matches[$date]["lines"]))
             $matches[$date]["lines"] = array();
