@@ -69,7 +69,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
             $res = preg_match_all($re, urlencode($test_line), $regex_matches);
             $match = urldecode($regex_matches[1][0]) . "<span class='match'>" . urldecode($regex_matches[2][0]) . "</span>" . urldecode($regex_matches[3][0]);
             array_push($matches[$date]["lines"], array(
-                "line" => $match,
+                "line" => htmlspecialchars($match),
                 "number" => $linenum
             ));
             $matches[$date]["file"] = $date . ".log";
