@@ -67,7 +67,7 @@ $stmt->execute();
           $test_string = strtolower($search_string);
         }
 echo htmlspecialchars($test_string);
-	    htmlspecialchars($test_line);
+	    echo htmlspecialchars($test_line);
 	    echo "<br>";
         $re = '/(.*)('.htmlspecialchars($test_string).')(.*)/'.(($ignore_case) ? "i" : "");
         if (strpos($test_line, $test_string) !== false) {
