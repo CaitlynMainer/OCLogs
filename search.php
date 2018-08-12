@@ -71,7 +71,7 @@ $stmt->execute();
           if (!is_array($matches[$date]["lines"]))
             $matches[$date]["lines"] = array();
           preg_match_all($re, htmlspecialchars($test_line), $regex_matches);
-		print_r(regex_matches);
+		print_r($regex_matches);
           $match = $regex_matches[1][0]."<span class='match'>".$regex_matches[2][0]."</span>".$regex_matches[3][0];
           array_push($matches[$date]["lines"], array("line" => $match, "number" => $linenum));
           $matches[$date]["file"] = $date.".log";
