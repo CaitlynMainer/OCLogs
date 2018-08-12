@@ -58,7 +58,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         $test_line   = $line;
         $test_string = $search_string;
         if ($ignore_case) {
-            $test_line   = strtolower($test_line);
+            $test_line   = strtolower($line);
             $test_string = strtolower($search_string);
         }
         
