@@ -67,7 +67,8 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         if (strpos($test_line, $test_string) !== false) {
             if (!is_array($matches[$date]["lines"]))
                 $matches[$date]["lines"] = array();
-            preg_match_all($re, htmlspecialchars($line), $regex_matches);
+            $res = preg_match_all($re, htmlspecialchars($line), $regex_matches);
+            echo $res."<br>";
             $match = $regex_matches[1][0] . "<span class='match'>" . $regex_matches[2][0] . "</span>" . $regex_matches[3][0];
             array_push($matches[$date]["lines"], array(
                 "line" => $match,
