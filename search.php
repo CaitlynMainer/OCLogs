@@ -42,7 +42,7 @@ function insert($target, $stringOrList)
 $ignore_case = true;
 if (isset($_GET['search']) && !empty($_GET['search']))
 {
-  $search_string = $_GET['search'];
+  $search_string = urldecode($_GET['search']);
   if (isset($_GET['case']))
     $ignore_case = (($_GET['case'] == 0) ? false : true);
   else
@@ -61,7 +61,7 @@ $stmt->execute();
     while ($stmt->fetch()) {
         $number += 1; //Array starts at 0 but lines start at 1
         $test_line = $line;
-        $test_string = urldecode($search_string);
+        $test_string = $search_string;
         if ($ignore_case) {
           $test_line = strtolower($line);
           $test_string = strtolower($search_string);
