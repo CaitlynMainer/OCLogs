@@ -66,14 +66,14 @@ $stmt->execute();
           $test_line = strtolower($line);
           $test_string = strtolower($search_string);
         }
-
+echo htmlspecialchars($test_string);
         $re = '/(.*)('.htmlspecialchars($test_string).')(.*)/'.(($ignore_case) ? "i" : "");
         if (strpos($test_line, $test_string) !== false) {
           if (!is_array($matches[$date]["lines"]))
             $matches[$date]["lines"] = array();
           preg_match_all($re, htmlspecialchars($line), $regex_matches);
           $match = $regex_matches[1][0]."<span class='match'>".$regex_matches[2][0]."</span>".$regex_matches[3][0];
-          array_push($matches[$date]["lines"], array("line" => "Meep: ".$match, "number" => $linenum));
+          array_push($matches[$date]["lines"], array("line" => $match, "number" => $linenum));
           $matches[$date]["file"] = $date.".log";
         }
         $i++;
