@@ -52,9 +52,9 @@ function parseLine($line, $line_number = null)
     //Actions
   } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] \* (?<line>(?<nick_performing>\S+) ((?<slap>[sS][lL][aA][pP][sS]( (?<nick_undergoing>\S+)( .+)?)?)|(.+)))$/', $line, $matches)) {
     $type = "action";
-    $line = "<span style=\"color: purple;\">[$matches[time]] * |$matches[line]| </span>";
+    $line = "<span style=\"color: purple;\">[$matches[time]] * $matches[line] </span>";
     //"Discord Actions" lines.
-  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] (?<line>(?<nick_performing>\S+) \* (?<nick_performing>\S+) ((?<slap>[sS][lL][aA][pP][sS]( (?<nick_undergoing>\S+)( .+)?)?)|(.+))$/', $line, $matches)) {
+  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] (?<nick_performing> \*\S+) (?<line>.+)$/', $line, $matches)) {
     $type = "action";
     $line = "<span style=\"color: purple;\">[$matches[time]] * $matches[line] </span>";
     //"Nickchange" lines.
