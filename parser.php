@@ -54,7 +54,7 @@ function parseLine($line, $line_number = null)
     $type = "action";
     $line = "<span style=\"color: purple;\">[$matches[time]] * $matches[line] </span>";
     //"Discord Actions" lines.
-  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] (?<nick_performing> \*\S+) (?<line>.+)$/', $line, $matches)) {
+  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] (?<nick_performing> \* \S+) (?<line>.+)$/', $line, $matches)) {
     $type = "action";
     $line = "<span style=\"color: purple;\">[$matches[time]] * $matches[line] </span>";
     //"Nickchange" lines.
