@@ -68,7 +68,7 @@ function parseLine($line, $line_number = null)
     /**$this->set_part($matches['time'], $matches['nick']);
      * "Topic" lines.
      */
-  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] \*\*\* (?<nick>\S+) changes topic to \'(?<line>.+)\'$/', $line, $matches)) {
+  } elseif (preg_match('/^\[(?<time>\d{2}:\d{2}(:\d{2})?)\] \*\*\* (?<nick>\S+) changes topic to (?<line>.+)$/', $line, $matches)) {
     $type = "topic";
     if ($matches['line'] !== ' ') {
       //$this->set_topic($matches['time'], $matches['nick'], $matches['line']);
