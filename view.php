@@ -151,6 +151,9 @@ if ($escaped != "") {
         while ($stmt->fetch()) {
             $type = "unknown";
             $line = htmlentities("[".$timestamp."] ".$line);
+            if (!isset($_GET['nolinks'])) {
+              $line = makeClickableLinks($line);
+            }
             if (!isset($_GET['plain'])) {
               $line = $mcp->colorize($line);
               list($line, $type) = parseLine($line, $line_number);
@@ -161,9 +164,6 @@ if ($escaped != "") {
             }
             if (isset($_GET['linenum'])) {
               $line = "$line_number: " . $line;
-            }
-            if (!isset($_GET['nolinks'])) {
-              $line = makeClickableLinks($line);
             }
             $buffer .= "<div id='CL$line_number' class='full_line $type'>" . $line . "</div>";
             $line_number++;
