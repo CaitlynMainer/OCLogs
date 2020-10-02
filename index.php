@@ -1,61 +1,53 @@
 <?PHP
 include("config.php");
-// Create connection
-$mysqli = new mysqli($config["mysql_server"], $config["mysql_user"], $config["mysql_pass"], $config["mysql_db"]);
-if (mysqli_connect_errno()) {
-	die("Failed to connect to MySQL: " . mysqli_connect_error());
-}
-?>
-<!doctype html>
-<html>
 
-<head>
-  <meta charset="UTF-8">
-  <title>OCLogs</title>
-  <link rel="stylesheet" href="style.css">
-  <script src=".sorttable.js"></script>
-</head>
+    // Include the DirectoryLister class
+    require_once('resources/DirectoryLister.php');
 
-<body>
+    // Initialize the DirectoryLister object
+    $lister = new DirectoryLister();
 
-  <div id="container">
-  
-	  <h1>PCL IRCLogs listing <a href="export.php">Export all</a></h1>
-    <table class="sortable">
-      <thead>
-        <tr>
-	  <th width="5%">&nbsp;</th>
-          <th>Channel Name</th>
-          <th>Days Logged</th>
-        </tr>
-      </thead>
-      <tbody>
-      <?php
-        $channel = "#oc";
-        $stmt = $mysqli->prepare("SELECT DISTINCT `channel` FROM `logs` ORDER BY `channel` DESC");
-        $stmt2 = $mysqli->prepare("SELECT DISTINCT `date` FROM `logs` WHERE `channel`=?");
-        $stmt2->bind_param(s,$channel);
-        $stmt->execute();
-        $stmt->bind_result($channel);
-        $stmt->store_result();
-        $sqltime = (microtime(true) - $time_start);
-        /* fetch value */
-        while ($stmt->fetch()) {
-            $stmt2->execute();
-            $stmt2->store_result();
-            $numrows = $stmt2->num_rows;
-              print("
-              <tr class='$class'>
-                <td><a href='/export.php?channel=".str_replace("#","",$channel)."'>Export</a></td>
-		<td><a href='/list?chan=".str_replace("#","",$channel)."'>$channel</a></td>
-                <td>$numrows</td>
-              </tr>");
+    // Restrict access to current directory
+    ini_set('open_basedir', $config['log_dir_path']);
+
+    // Return file hash
+    if (isset($_GET['hash'])) {
+
+        // Get file hash array and JSON encode it
+        $hashes = $lister->getFileHash($_GET['hash']);
+        $data   = json_encode($hashes);
+
+        // Return the data
+        die($data);
+
+    }
+
+    if (isset($_GET['zip'])) {
+
+        $dirArray = $lister->zipDirectory($_GET['zip']);
+
+    } else {
+
+        // Initialize the directory array
+        if (isset($_GET['dir'])) {
+            $dirArray = $lister->listDirectory($_GET['dir']);
+        } else {
+            $dirArray = $lister->listDirectory('.');
         }
-        $stmt2->close();
-        $stmt->close();
-      ?>
-      </tbody>
-    </table>
-  </div>
-</body>
-</html>
+
+        // Define theme path
+        if (!defined('THEMEPATH')) {
+            define('THEMEPATH', $lister->getThemePath());
+        }
+
+        // Set path to theme index
+        $themeIndex = $lister->getThemePath(true) . '/index.php';
+
+        // Initialize the theme
+        if (file_exists($themeIndex)) {
+            include($themeIndex);
+        } else {
+            die('ERROR: Failed to initialize theme');
+        }
+
+    }
