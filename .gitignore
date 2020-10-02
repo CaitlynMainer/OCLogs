@@ -18,3 +18,5 @@
 !config.dist.php
 !view.php
 !get_newest.php
+!/resources/
+!/fancybox/
