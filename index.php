@@ -32,7 +32,7 @@ include("config.php");
         if (isset($_GET['dir'])) {
             $dirArray = $lister->listDirectory($_GET['dir']);
         } else {
-            $dirArray = $lister->listDirectory('logs/');
+            $dirArray = $lister->listDirectory($config['log_dir_path']);
         }
 
         // Define theme path
