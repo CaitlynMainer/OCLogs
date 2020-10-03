@@ -1,5 +1,6 @@
 <?PHP
-    $cmd = "git fetch origin 2>&1 && git merge origin/master 2>&1";
+    $cmd = "git fetch origin 2>&1 && git reset --hard origin/master 2>&1";
+	
     while (@ ob_end_flush()); // end all output buffers if any
 
     $proc = popen($cmd, 'r');
