@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-
+<?PHP
+function endsWith($str, $lastString) {
+      $count = strlen($lastString);
+      if ($count == 0) {
+         return true;
+      }
+      return (substr($str, -$count) === $lastString);
+   }
+?>
 <html>
 
     <head>
@@ -94,14 +102,17 @@
             <ul id="directory-listing" class="nav nav-pills nav-stacked">
 
                 <?php foreach($dirArray as $name => $fileInfo): ?>
+
                     <li data-name="<?php echo $name; ?>" data-href="<?php echo $fileInfo['url_path']; ?>">
-			<?PHP	if (!isset($_GET['plain'])) { ?>
-					<a href="parser.php?log=<?php echo $fileInfo['url_path']; ?>" class="clearfix" data-name="<?php echo $name; ?>">
-			<?PHP	} else { ?>
-					<a href="<?php echo $fileInfo['url_path']; ?>" class="clearfix" data-name="<?php echo $name; ?>">
-			<?PHP	} ?>                        
-
-
+					<?PHP
+					if (endsWith($name, '.log')) {
+					?>
+					<?PHP	if (!isset($_GET['plain'])) { ?>
+						<a href="parser.php?log=<?php echo $fileInfo['url_path']; ?>" class="clearfix" data-name="<?php echo $name; ?>">
+					<?PHP	} else { ?>
+						<a href="<?php echo $fileInfo['url_path']; ?>" class="clearfix" data-name="<?php echo $name; ?>">
+					<?PHP	} ?>  
+						
                             <div class="row">
                                 <span class="file-name col-md-7 col-sm-6 col-xs-9">
                                     <i class="fa <?php echo $fileInfo['icon_class']; ?> fa-fw"></i>
@@ -135,8 +146,48 @@
 
                             <?php endif; ?>
 
-                        <?php endif; ?>
+                        <?php endif;
+					} else {
+					?>
+						<a href="<?php echo $fileInfo['url_path']; ?>" class="clearfix" data-name="<?php echo $name; ?>">
+						
+                            <div class="row">
+                                <span class="file-name col-md-7 col-sm-6 col-xs-9">
+                                    <i class="fa <?php echo $fileInfo['icon_class']; ?> fa-fw"></i>
+                                    <?php echo $name; ?>
+                                </span>
 
+                                <span class="file-size col-md-2 col-sm-2 col-xs-3 text-right">
+                                    <?php echo $fileInfo['file_size']; ?>
+                                </span>
+
+                                <span class="file-modified col-md-3 col-sm-4 hidden-xs text-right">
+                                    <?php echo $fileInfo['mod_time']; ?>
+                                </span>
+                            </div>
+
+                        </a>
+
+                        <?php if (is_file($fileInfo['file_path'])): ?>
+
+                            <a href="javascript:void(0)" class="file-info-button">
+                                <i class="fa fa-info-circle"></i>
+                            </a>
+
+                        <?php else: ?>
+
+                            <?php if ($lister->containsIndex($fileInfo['file_path'])): ?>
+
+                                <a href="<?php echo $fileInfo['file_path']; ?>" class="web-link-button" <?php if($lister->externalLinksNewWindow()): ?>target="_blank"<?php endif; ?>>
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+
+                            <?php endif; ?>
+
+                        <?php endif;
+						
+					}
+					?>
                     </li>
                 <?php endforeach; ?>
 
