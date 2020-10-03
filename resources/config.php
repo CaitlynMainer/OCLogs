@@ -25,7 +25,13 @@ return array(
         '*.gz',
         '*.tgz',
         'LICENSE',
-        '*.iml'
+        '*.iml',
+		'logs/chanserv/*',
+		'logs/nickserv/*',
+		'logs/status/*',
+		'logs/chanserv',
+		'logs/nickserv',
+		'logs/status'
     ),
 
     // Files that, if present in a directory, make the directory
