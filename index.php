@@ -8,7 +8,7 @@ include("config.php");
     $lister = new DirectoryLister();
 
     // Restrict access to current directory
-    ini_set('open_basedir', $config['log_dir_path']);
+    ini_set('open_basedir', getcwd());
 
     // Return file hash
     if (isset($_GET['hash'])) {
@@ -32,7 +32,7 @@ include("config.php");
         if (isset($_GET['dir'])) {
             $dirArray = $lister->listDirectory($_GET['dir']);
         } else {
-            $dirArray = $lister->listDirectory('.');
+            $dirArray = $lister->listDirectory('logs/');
         }
 
         // Define theme path
