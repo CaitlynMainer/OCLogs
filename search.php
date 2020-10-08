@@ -85,6 +85,13 @@ else
 }
 ?>
 <style>
+a { color: rgb(140, 140, 250); }::-webkit-scrollbar-track-piece { background-color: rgba(255, 255, 255, 0.2) !important; }::-webkit-scrollbar-track { background-color: rgba(255, 255, 255, 0.3) !important; }::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.5) !important; }embed[type="application/pdf"] { filter: invert(90%); }
+
+html { color: rgb(191, 191, 191); background: rgb(31, 31, 31) !important; }body { background-color: rgb(31, 31, 31); background-image: none !important; }input, select, textarea, button { color: rgb(191, 191, 191); background-color: rgb(31, 31, 31); }font { color: rgb(191, 191, 191); }
+
+html { filter: contrast(100%) brightness(100%) saturate(100%); }.NIGHTEYE_Filter { width: 100%; height: 100%; position: fixed; left: 0px; top: 0px; pointer-events: none; z-index: 2147483647; }.NIGHTEYE_YellowFilter { background: rgba(255, 255, 0, 0.15); opacity: 0; }.NIGHTEYE_BlueFilter { background: rgba(0, 0, 255, 0.15); opacity: 0; }.NIGHTEYE_DimFilter { background: rgba(0, 0, 0, 0.5); opacity: 0; }.NIGHTEYE_TransformZ { transform: translateZ(0px); }
+
+.result_display { border: 1px solid rgb(45, 92, 180); padding: 10px; margin: 5px 5px 15px; overflow-wrap: break-word; }.result_display:hover { background-color: rgb(13, 53, 53); }.result_display_title { font-weight: bold; font-size: 1em; margin-bottom: 10px; border-bottom: 1px solid rgb(45, 92, 180); }.line_number { display: inline-block; width: 45px; }.match { color: rgb(230, 153, 153); font-weight: bold; }label { cursor: pointer; }
   .result_display
   {
     border        : 1px solid cornflowerblue;
@@ -96,7 +103,7 @@ else
 
   .result_display:hover
   {
-    background-color: azure;
+    background-color: rgb(41, 41, 41);
   }
 
   .result_display_title
