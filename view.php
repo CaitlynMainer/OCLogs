@@ -232,7 +232,7 @@ if ($escaped != "") {
       var element = document.getElementById("C" + hash);
 
       if (typeof element != "undefined")
-        element.style.backgroundColor = "#c9c9c9";
+        element.style.backgroundColor = "#333333";
     }, 100);
   }
 
