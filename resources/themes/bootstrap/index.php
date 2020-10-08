@@ -101,14 +101,17 @@ function endsWith($str, $lastString) {
 
             <ul id="directory-listing" class="nav nav-pills nav-stacked">
 
-                <?php foreach($dirArray as $name => $fileInfo): ?>
+                <?php
+				$chan = str_replace("logs/#", "", $_GET['dir']);
+				foreach($dirArray as $name => $fileInfo): ?>
 
                     <li data-name="<?php echo $name; ?>" data-href="<?php echo $fileInfo['url_path']; ?>">
 					<?PHP
 					if (endsWith($name, '.log')) {
+						
 					?>
 					<?PHP	if (!isset($_GET['plain'])) { ?>
-						<a href="parser.php?log=<?php echo $fileInfo['url_path']; ?>" class="clearfix" data-name="<?php echo $name; ?>">
+						<a href="view?chan=<?php echo $chan; ?>&log=<?php echo $name; ?>" class="clearfix" data-name="<?php echo $name; ?>">
 					<?PHP	} else { ?>
 						<a href="<?php echo $fileInfo['url_path']; ?>" class="clearfix" data-name="<?php echo $name; ?>">
 					<?PHP	} ?>  
