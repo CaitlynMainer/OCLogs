@@ -55,6 +55,17 @@ if (!isset($_GET['plain'])) {
   ga('send', 'pageview');
 </script>
     <style>
+    .box{
+    display: none;
+    width: 100%;
+}
+
+a:hover + .box,.box:hover{
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+    
     a { color: rgb(140, 140, 250); }::-webkit-scrollbar-track-piece { background-color: rgba(255, 255, 255, 0.2) !important; }::-webkit-scrollbar-track { background-color: rgba(255, 255, 255, 0.3) !important; }::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.5) !important; }embed[type='application/pdf'] { filter: invert(90%); }
 
 html { color: rgb(191, 191, 191); background: rgb(31, 31, 31) !important; }body { background-color: rgb(31, 31, 31); background-image: none !important; }input, select, textarea, button { color: rgb(191, 191, 191); background-color: rgb(31, 31, 31); }font { color: rgb(191, 191, 191); }
