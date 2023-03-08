@@ -32,13 +32,16 @@ function insert($target, $stringOrList)
 }
 
 $ignore_case = true;
+
 if (isset($_GET['search']) && !empty($_GET['search']))
 {
   $search_string = $_GET['search'];
+
   if (isset($_GET['case']))
     $ignore_case = (($_GET['case'] == 0) ? false : true);
   else
     $ignore_case = false;
+
   $test = false;
   $file_types = array(
     "log"
@@ -49,13 +52,22 @@ if (isset($_GET['search']) && !empty($_GET['search']))
   {
     if (in_array($file->getExtension(), $file_types) && $file->getBasename() != "cron.log" && (!isset($_GET['file']) || $_GET['file'] == $file))
     {
-      $file_contents = file_get_contents($file->getPathname());
-      $file_contents = explode("\n", $file_contents);
+      $handle = fopen($file->getPathname(), "r");
+      $file_contents = array();
+
+      while (!feof($handle))
+      {
+        $file_contents[] = fgets($handle);
+      }
+
+      fclose($handle);
+
       foreach ($file_contents as $number => $line)
       {
         $number += 1; //Array starts at 0 but lines start at 1
         $test_line = $line;
         $test_string = $search_string;
+
         if ($ignore_case)
         {
           $test_line = strtolower($line);
@@ -63,10 +75,12 @@ if (isset($_GET['search']) && !empty($_GET['search']))
         }
 
         $re = '/(.*)('.htmlspecialchars($test_string).')(.*)/'.(($ignore_case) ? "i" : "");
+
         if (strpos($test_line, $test_string) !== false)
         {
           if (!is_array($matches[$file->getBasename()]["lines"]))
             $matches[$file->getBasename()]["lines"] = array();
+
           preg_match_all($re, htmlspecialchars($line), $regex_matches);
           $match = $regex_matches[1][0]."<span class='match'>".$regex_matches[2][0]."</span>".$regex_matches[3][0];
           array_push($matches[$file->getBasename()]["lines"], array("line" => $match, "number" => $number));
