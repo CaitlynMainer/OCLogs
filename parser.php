@@ -4,10 +4,7 @@ require("colorparser.php");
 
 function makeClickableLinks($s)
 {
-  return preg_replace('@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.:#-]*(\?\S+)?[^\.\s])?)?)@', '<a href="$1" target="_blank" rel="nofollow">$1</a>  <div class="box">
-     <iframe src="$1" width = "500px" height = "500px">
-     </iframe>
-  </div> ', $s);
+  return preg_replace('@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.:#-]*(\?\S+)?[^\.\s])?)?)@', '<a href="$1" target="_blank" rel="nofollow">$1</a>', $s);
 }
 
 /**
