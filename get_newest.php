@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 include("config.php");
 include("parser.php");
-$chan = $_GET[chan];
+$chan = $_GET['chan'];
 $escaped = basename($_GET['log']);
 $inline = $_GET['line'];
 
