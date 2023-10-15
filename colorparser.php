@@ -49,7 +49,7 @@ class MircColorParser implements ColorParser {
 		$foreColor = '';
 		$backColor = '';
 		for($i=0; $i < $length; $i++) {
-			switch(ord($message{$i})) {
+			switch(ord($message[$i])) {
 				case 2:
 					if($bold) {
 						$newText .= '</b>';
@@ -66,21 +66,22 @@ class MircColorParser implements ColorParser {
 					}
 					$foreColor = '';
 					$backColor = '';
-					if ( @is_numeric($message{$i+1}) && ($message{$i+1} >= 0) && ($message{$i+1} <= 9)) {
+					if (@is_numeric($message[$i + 1]) && ($message[$i + 1] >= 0) && ($message[$i + 1] <= 9)) {
 						$color = true;
-						if( @is_numeric($message{++$i+1}) && ($message{$i+1} >= 0) && ($message{$i+1} <= 9)) {
-							$foreColor = $this->getColor((($message{$i} * 10) + $message{++$i}));
-						}else{
-							$foreColor = $this->getColor($message{$i});
+						if (@is_numeric($message[++$i + 1]) && ($message[$i + 1] >= 0) && ($message[$i + 1] <= 9)) {
+							$foreColor = $this->getColor((($message[$i] * 10) + $message[++$i]));
+						} else {
+							$foreColor = $this->getColor($message[$i]);
 						}
-						if (($message{$i+1} == ',') && @is_numeric($message{++$i+1}) && ($message{$i+1} >= 0) && ($message{$i+1} <= 9)) {
-							if ( @is_numeric($message{++$i+1}) && ($message{$i+1} >= 0) && ($message{$i+1} <= 9)) {
-								$backColor = $this->getColor((($message{$i} * 10) + $message{++$i}));
-							}else{
-								$backColor = $this->getColor($message{$i});
+						if (($message[$i + 1] == ',') && @is_numeric($message[++$i + 1]) && ($message[$i + 1] >= 0) && ($message[$i + 1] <= 9)) {
+							if (@is_numeric($message[++$i + 1]) && ($message[$i + 1] >= 0) && ($message[$i + 1] <= 9)) {
+								$backColor = $this->getColor((($message[$i] * 10) + $message[++$i]));
+							} else {
+								$backColor = $this->getColor($message[$i]);
 							}
 						}
 					}
+					
 					if($foreColor) {
 						/* We display everything on white background, so we don't want
 						   white text without an background color.	
@@ -131,7 +132,7 @@ class MircColorParser implements ColorParser {
 					}
 					break;
 				default:
-					$newText .= $message{$i};
+					$newText .= $message[$i];
 					break;
 			}
 
