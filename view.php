@@ -1,8 +1,8 @@
 <?php
 include("config.php");
 include("parser.php");
-$channel = "#" . $_GET[chan];
-$chan    = $_GET[chan];
+$channel = "#" . $_GET['chan'];
+$chan    = $_GET['chan'];
 
 
 $target_log = $_GET['log'];
