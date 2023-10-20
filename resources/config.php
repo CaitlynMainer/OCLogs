@@ -4,7 +4,7 @@ return array(
 
     // Basic settings
     'hide_dot_files'            => true,
-    'list_folders_first'        => true,
+    'list_folders_first'        => false,
     'list_sort_order'           => 'natcasesort_reverse',
     'theme_name'                => 'bootstrap',
     'external_links_new_window' => true,
