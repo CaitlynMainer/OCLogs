@@ -139,6 +139,10 @@ if ($escaped != "") {
         }
         if ($handle) {
             while (($line = fgets($handle)) !== false) {
+                // Skip this iteration if "sets mode +b" is in the line
+                if (strpos($line, "sets mode +b") !== false) {
+                    continue;
+                }
                 $type = "unknown";
                 $line = htmlspecialchars($line);
                 if (!isset($_GET['plain'])) {
